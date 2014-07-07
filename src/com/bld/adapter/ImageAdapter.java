@@ -1,4 +1,4 @@
-package com.bld.test;
+package com.bld.adapter;
 import java.lang.ref.SoftReference;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.Vector;    
 
 import com.bld.R;
-import com.bld.activity.TestActivity;
+import com.bld.activity.MainActivity;
 import com.bld.object.Product;
 import com.bld.task.HttpResourcesTask;
 import com.bld.task.Task;

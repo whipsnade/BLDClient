@@ -13,7 +13,9 @@ public class ConnectionUtils {
 	}
 	public String ServerPath="http://192.168.1.106:8080/BLDService/";
 	public String ProductUrl="ProductUtilService/getAllProduct";
+	public String getAllSuggestUrl="ProductUtilService/getAllSuggest";
 	public String ImageUrl="http://192.168.1.106:8080/ImgServer/ProductImg/";
+	public String SuggestImageUrl="http://192.168.1.106:8080/ImgServer/SuggestImg/";
 	
 	
 }

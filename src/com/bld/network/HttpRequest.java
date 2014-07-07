@@ -22,13 +22,14 @@ public class HttpRequest {
 		return request(url);
 	}
 	
-	public static String getSubjectItems() {
+	public static String getAllSuggest() {
 		
-		String url=URL+"/zt";
+		String url=URL+ConnectionUtils.getInstance().getAllSuggestUrl;
 		Log.e("更新", ""+url);
 		return request(url);
 	}
 	
+		
 	private static String request(String url)
 	{
 		HttpClient httpClient = new DefaultHttpClient();
