@@ -28,15 +28,18 @@ import android.view.LayoutInflater;
 import android.view.View;    
 import android.view.ViewGroup;    
 import android.view.View.OnClickListener;
+import android.view.ViewGroup.MarginLayoutParams;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.LinearLayout.LayoutParams;
 import android.widget.TextView;
 
 public class ImageAdapter extends BaseAdapter {
 	 private Context mContext;                     // ����Context    
      private Vector<Integer> mImageIds = new Vector<Integer>();    // ����һ��������ΪͼƬԴ    
      private List<Product> pro_list = new ArrayList<Product> ();
-      
+     private List<View> select_list = new ArrayList<View> ();
      private int lastPosition = -1;            //��¼��һ��ѡ�е�ͼƬλ�ã�-1��ʾδѡ���κ�ͼƬ    
      private boolean multiChoose;                //��ʾ��ǰ�������Ƿ������ѡ    
      private LayoutInflater mInflater =null;
@@ -186,9 +189,18 @@ public class ImageAdapter extends BaseAdapter {
 
 
  		@Override
- 		public void onClick(View arg0) {
+ 		public void onClick(View view) {
  			// TODO Auto-generated method stub
- 			new AlertDialog.Builder(arg0.getContext()) .setTitle("Android testʾ") .setMessage("image click") .show();
+ 			LinearLayout linear=(LinearLayout) view.findViewById(R.id.border_linear);
+ 			if(select_list.contains(view))
+ 			{
+ 				linear.setBackgroundResource(R.drawable.nonborder);
+ 				select_list.remove(view);
+ 			}
+ 			else{
+ 				linear.setBackgroundResource(R.drawable.border);
+ 				select_list.add(view);
+ 			}
  		}
  	};
  	

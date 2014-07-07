@@ -57,7 +57,7 @@ public class MainActivity extends Activity {
 		 image_adapter = new ViewFlowImageAdapter(this);
 		 new Thread(downloadRun).start();
 		 new Thread(suggestRun).start();
-		 TaskQueue.setThreadMaxNum(5);
+		 TaskQueue.setThreadMaxNum(10);
 	}
 	
 	Handler handler = new Handler(){
