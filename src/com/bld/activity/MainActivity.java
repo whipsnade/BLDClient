@@ -4,8 +4,6 @@ import java.io.IOException;
 import java.util.List;
 
 import com.bld.R;
-import com.bld.location.LocationEngine;
-
 import android.app.TabActivity;
 import android.content.Context;
 import android.content.Intent;

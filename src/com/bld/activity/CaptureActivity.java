@@ -11,16 +11,11 @@ import com.bld.view.ViewfinderView;
 import com.google.zxing.BarcodeFormat;
 import com.google.zxing.Result;
 import android.app.Activity;
-import android.content.Intent;
-import android.content.pm.ActivityInfo;
-import android.content.res.AssetFileDescriptor;
 import android.graphics.Bitmap;
-import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.media.MediaPlayer.OnCompletionListener;
 import android.os.Bundle;
 import android.os.Handler;
-import android.os.Vibrator;
 import android.view.KeyEvent;
 import android.view.SurfaceHolder;
 import android.view.View;
@@ -179,6 +174,7 @@ public class CaptureActivity extends Activity{
 	 * When the beep has finished playing, rewind to queue up another one.
 	 */
 	private final OnCompletionListener beepListener = new OnCompletionListener() {
+		@Override
 		public void onCompletion(MediaPlayer mediaPlayer) {
 			mediaPlayer.seekTo(0);
 		}
