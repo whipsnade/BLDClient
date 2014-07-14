@@ -1,173 +1,171 @@
 package com.bld.activity;
 
-
-import java.io.UnsupportedEncodingException;
-import java.util.ArrayList;
+import java.io.IOException;
 import java.util.List;
 
-import javax.security.auth.Subject;
+import com.bld.R;
+import com.bld.location.LocationEngine;
 
-import android.annotation.SuppressLint;
-import android.app.Activity;
+import android.app.TabActivity;
+import android.content.Context;
+import android.content.Intent;
+import android.location.Address;
+import android.location.Geocoder;
+import android.location.Location;
+import android.location.LocationListener;
+import android.location.LocationManager;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Message;
 import android.util.Log;
 import android.view.Menu;
-import android.view.View;
-import android.widget.AdapterView;
-import android.widget.AdapterView.OnItemClickListener;
+import android.view.MenuItem;
+import android.widget.RadioGroup;
+import android.widget.RadioGroup.OnCheckedChangeListener;
+import android.widget.TabHost;
 
-import com.bld.R;
-import com.bld.adapter.ImageAdapter;
-import com.bld.adapter.ViewFlowImageAdapter;
-import com.bld.data.DataBuilder;
-import com.bld.object.Product;
-import com.bld.object.Suggest;
-import com.bld.task.TaskQueue;
-import com.bld.view.MainGridView;
-import com.bld.view.MainGridView.OnScrollListener;
-import com.bld.widget.CircleFlowIndicator;
-import com.bld.widget.ViewFlow;
-
-
-
-
-@SuppressLint("HandlerLeak")
-public class MainActivity extends Activity {
-	MainGridView gridView_check;  
-	ImageAdapter ia_check;
-	ViewFlow viewFlow;
-	CircleFlowIndicator indic;
-	ViewFlowImageAdapter image_adapter;
-
+public class MainActivity extends TabActivity {
+	private RadioGroup group;
+	private TabHost tabHost;
+	public static final String TAB_HOME="tabHome";
+	public static final String TAB_Songdian="tab_songdian";
+	public static final String TAB_Gouwuche="tab_gouwuche";
+	public static final String TAB_Wo="tab_wo";
 	
-	ArrayList<Product> ProductList = new ArrayList<Product>();
-	ArrayList<Suggest> SuggestList = new ArrayList<Suggest>();
-	@Override
-	protected void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activitymain);
-//
-//
-		 viewFlow = (ViewFlow) findViewById(R.id.viewflow);
-	     indic  = (CircleFlowIndicator) findViewById(R.id.viewflowindic);
-		 
-		 gridView_check =  (MainGridView) findViewById(R.id.gridview_main);
-		 image_adapter = new ViewFlowImageAdapter(this);
-		 new Thread(downloadRun).start();
-		 new Thread(suggestRun).start();
-		 TaskQueue.setThreadMaxNum(10);
-	}
-	
-	Handler handler = new Handler(){
-		  @SuppressWarnings("unchecked")
-		  public void handleMessage(Message msg) {
-			List<Product> list =  (List<Product>)msg.obj;
-			 ia_check = new ImageAdapter(MainActivity.this,list); 
-			  gridView_check.setAdapter(ia_check);
-		  }  
-		 };
-		 
+	 private Geocoder geocoder;
+	 private LocationManager locationManager;
+    /** Called when the activity is first created. */
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.main);
+//LocationEngine.getinstence().setManager((LocationManager) getSystemService(Context.LOCATION_SERVICE));     
+        LocationManager locationManager= (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+		locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 1000, 0, locationListener);
+		locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 1000, 0, locationListener);
+		 geocoder = new Geocoder(this);  
 		
-		 Runnable suggestRun = new Runnable(){  
-	    	 @Override  
-			 public void run() {
-	    		 try {
-					SuggestList=DataBuilder.GetInstence().getAllSuggest();
-				} catch (UnsupportedEncodingException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
+        group = (RadioGroup)findViewById(R.id.main_radio);
+		tabHost = getTabHost();
+		tabHost.addTab(tabHost.newTabSpec(TAB_HOME)
+	                .setIndicator(TAB_HOME)
+	                .setContent(new Intent(this,HomeActivity.class)));
+	    tabHost.addTab(tabHost.newTabSpec(TAB_Songdian)
+	                .setIndicator(TAB_Songdian)
+	                .setContent(new Intent(this,SongActivity.class)));
+
+	    group.setOnCheckedChangeListener(new OnCheckedChangeListener() {
+			@Override
+			public void onCheckedChanged(RadioGroup group, int checkedId) {
+				switch (checkedId) {
+				case R.id.radio_button0:
+					tabHost.setCurrentTabByTag(TAB_HOME);
+					break;
+				case R.id.radio_button1:
+					tabHost.setCurrentTabByTag(TAB_Songdian);
+					break;
+				case R.id.radio_button2:
+					tabHost.setCurrentTabByTag(TAB_Gouwuche);
+					break;
+				case R.id.radio_button3:
+					tabHost.setCurrentTabByTag(TAB_Wo);
+					break;
+				default:
+					break;
 				}
-	    		 viewFlow.addSuggestData(SuggestList,image_adapter,indic);
-
-	    	 }
-	    };
-	    
-	    
-	 Runnable downloadRun = new Runnable(){  
-		  
-		 @Override  
-		 public void run() {  
-		     // TODO Auto-generated method stub  
-			 try {
-				ProductList=DataBuilder.GetInstence().getAllProduct(0);
-			} catch (UnsupportedEncodingException e) {
-				/// TODO Auto-generated catch block
-				Log.e("错误", e.getMessage());
 			}
-			 
-			  
-			  handler.sendMessage(handler.obtainMessage(22, ProductList));
-		
-			  gridView_check.setOnScrollListener(new OnScrollListener() {
-
-					@Override
-					public void onBottom(int scrollY) {
-						// TODO Auto-generated method stub
-			
-					}
-
-					@Override
-					public void onTop(int scrollY) {
-						// TODO Auto-generated method stub
-					}
-
-					@Override
-					public void onScroll(int scrollY) {
-						// TODO Auto-generated method stub
-						//Log.e("高度", ""+scrollY);
-					}
-
-					@Override
-					public void onAutoScroll(int scrollY) {
-						// TODO Auto-generated method stub
-
-					}
-
-					@Override
-					public void onUpdata(int scrollY) {
-						//Log.e("更新", ""+scrollY);
-						
-						//  new Thread(getNextRun).start();
-					}
-
-					@Override
-					public void onScrollUP(int scrollY) {
-						// TODO Auto-generated method stub
-						// System.out.println("锟斤拷锟较癸拷锟斤拷");
-					}
-
-					@Override
-					public void onScrollDOWN(int scrollY) {
-						// TODO Auto-generated method stub
-						// System.out.println("锟斤拷锟铰癸拷锟斤拷");
-					//if(scrolly)
-						//new Thread(getNextRun).start();
-					}
-
-					@Override
-					public void onScrollMid(int scrollY) {
-						// TODO Auto-generated method stub
-//						if(!loadOver){
-//						Log.e("中段", ""+scrollY);
-//						loadOver=true;
-//						  new Thread(getNextRun).start();
-//						}
-					}
-
-				});
-			
-		 }  
-	};
-	
-	
-	
-	@Override
+		});
+    }
+    
+    @Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// Inflate the menu; this adds items to the action bar if it is present.
 		getMenuInflater().inflate(R.menu.main, menu);
 		return true;
 	}
+    
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+    	if(item.getItemId() == R.id.action_code){
+    		Intent intent = new Intent();
 
+			intent.setClass(MainActivity.this, CaptureActivity.class);
+
+			intent.putExtra("str", "come from first activity");
+
+			startActivity(intent);//无返回值的调用,启动一个明确的activity
+
+			//startActivityForResult(intent, REQUEST_CODE);
+
+			/*调用打电话的intent,启动一个未指明的activity，由android去寻找
+
+			 * Intent intent = new Intent();*/
+
+    	}
+    	return true;
+    }
+    
+    private final LocationListener locationListener = new LocationListener() {
+
+    	@Override
+    	public void onLocationChanged(Location location) {
+                    //如果需要去到GPS启动后取到的Location,必须用这个！
+    		double latitude = location.getLatitude();     //经度 
+    		double longitude = location.getLongitude(); //纬度 
+    		
+    		 List<Address> addresses;
+    		try {
+    			addresses = geocoder.getFromLocation(latitude,longitude, 1);
+    		
+    		    if (addresses.isEmpty()) {    
+    		        Log.e("location", "addressed is Empty");    
+    		    }    
+    		    else {    
+    		        if (addresses.size() > 0) {  
+    		        	String add=addresses.get(0).getLocality() + addresses.get(0).getSubLocality() + addresses.get(0).getThoroughfare();
+    		        	Log.e("location", add);
+    		        	getActionBar().setTitle(add);
+    		        	
+    		        }    
+    		    } 
+    		    } catch (IOException e) {
+    				// TODO Auto-generated catch block
+    				e.printStackTrace();
+    			}       
+    		Log.e("位置", latitude +" "+longitude);
+    	}
+
+    	@Override
+    	public void onProviderDisabled(String provider) {
+    	// Provider被disable时触发此函数，比如GPS被关闭 
+    	
+    	}
+
+    	@Override
+    	public void onProviderEnabled(String provider) {
+    	//  Provider被enable时触发此函数，比如GPS被打开 
+    	
+    	}
+
+    	@Override
+    	public void onStatusChanged(String provider, int status, Bundle extras) {
+    	// Provider的转态在可用、暂时不可用和无服务三个状态直接切换时触发此函数 
+    	
+    	}
+
+    };
+    
+//    @Override      
+//    protected void onResume() {            
+//    	super.onResume();           
+//	         // 当GPS定位时，在这里注册requestLocationUpdates监听就非常重要而且必要。没有这句话，定位不能成功。             
+//    	locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 1000, 1, locationListener);          
+//        
+//    }
+//        
+//   @Override        
+//   protected void onPause() {
+//          super.onPause();           // 取消注册监听          
+//      if (locationManager != null) {   
+//    	  locationManager.removeUpdates(locationListener);          
+//      }     
+//   }
 }

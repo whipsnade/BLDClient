@@ -1,27 +1,8 @@
 package com.bld.view;
 
-import java.util.List;
-
-import com.bld.R;
-import com.bld.object.Product;
-import com.bld.task.HttpResourcesTask;
-import com.bld.task.HttpResourcesTask.CacheType;
-import com.bld.task.HttpResourcesTask.HttpType;
-import com.bld.task.Task;
-import com.bld.task.Task.OnFinishListen;
-
-
-
-
-import com.bld.utils.ConnectionUtils;
-
 import android.content.Context;
-import android.graphics.drawable.Drawable;
 import android.util.AttributeSet;
-import android.view.LayoutInflater;
-import android.view.View;
 import android.widget.GridView;
-import android.widget.ImageView;
 import android.widget.ProgressBar;
 
 public class MainGridView extends GridView {

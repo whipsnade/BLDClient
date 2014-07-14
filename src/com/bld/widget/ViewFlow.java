@@ -1,8 +1,6 @@
 package com.bld.widget;
 
-import android.annotation.SuppressLint;
 import android.content.Context;
-import android.content.Intent;
 import android.content.res.Configuration;
 import android.content.res.TypedArray;
 import android.database.DataSetObserver;
@@ -11,11 +9,11 @@ import android.os.Bundle;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.*;
-import android.view.View.OnClickListener;
 import android.view.ViewTreeObserver.OnGlobalLayoutListener;
 import android.widget.Adapter;
 import android.widget.AdapterView;
 import android.widget.ImageView;
+import android.widget.ListView;
 import android.widget.Scroller;
 
 import java.util.EnumSet;
@@ -70,6 +68,7 @@ public class ViewFlow extends AdapterView<Adapter> {
 	private AdapterDataSetObserver mDataSetObserver;
 	private FlowIndicator mIndicator;
 	private int mLastOrientation = -1;
+	public ListView mListView;
 	/** Extra return value from obtainView: tells you whether the item it returned on the last call was recycled rather than created by the adapter.
 	 * This is a member because getting a second return value requires an allocation. */
 	private boolean mLastObtainedViewWasRecycled = false;
@@ -140,6 +139,7 @@ public class ViewFlow extends AdapterView<Adapter> {
 		mMaximumVelocity = configuration.getScaledMaximumFlingVelocity();
 	}
 
+	@Override
 	public void onConfigurationChanged(Configuration newConfig) {
 		if (newConfig.orientation != mLastOrientation) {
 			mLastOrientation = newConfig.orientation;
@@ -297,7 +297,7 @@ public class ViewFlow extends AdapterView<Adapter> {
 			if (!mScroller.isFinished()) {
 				mScroller.abortAnimation();
 			}
-
+			mListView.requestDisallowInterceptTouchEvent(true);
 			// Remember where the motion event started
 			mLastMotionX = x;
 
@@ -366,7 +366,7 @@ public class ViewFlow extends AdapterView<Adapter> {
 			}
 
 			mTouchState = TOUCH_STATE_REST;
-
+			mListView.requestDisallowInterceptTouchEvent(false);
 			break;
 		case MotionEvent.ACTION_CANCEL:
 			mTouchState = TOUCH_STATE_REST;
@@ -592,7 +592,7 @@ public class ViewFlow extends AdapterView<Adapter> {
 	
 	public void addSuggestData(final List<Suggest> list,final ViewFlowImageAdapter image_adapter,final CircleFlowIndicator indic) {
 		//canLoading = false;
-		this.post(new Runnable() {
+this.post(new Runnable() {
 			@Override
 			public void run() {
 				tasksLength = list.size();
@@ -618,7 +618,7 @@ public class ViewFlow extends AdapterView<Adapter> {
 										((ImageView) convertView.findViewById(R.id.imgView)).setTag(t.getTag());
 										((ImageView) convertView.findViewById(R.id.imgView)).setImageDrawable(TampDraw);
 										((ImageView) convertView.findViewById(R.id.imgView)).setOnClickListener(childOnClickListen);
-										image_adapter.viewList.add(convertView);
+										ViewFlowImageAdapter.viewList.add(convertView);
 									
 											
 										

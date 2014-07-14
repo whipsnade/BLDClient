@@ -17,18 +17,14 @@ package com.bld.adapter;
 
 import java.util.ArrayList;
 
-import com.bld.data.DataBuilder;
 import com.bld.widget.CircleFlowIndicator;
 import com.bld.widget.ViewFlow;
 
 import android.content.Context;
-import android.graphics.drawable.Drawable;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.ImageView;
 
 public class ViewFlowImageAdapter extends BaseAdapter {
 

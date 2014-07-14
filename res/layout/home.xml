@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
+    android:layout_width="fill_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
     >
     
-<RelativeLayout android:id="@+id/choiceness_head" android:layout_width="fill_parent" 
+ <!--  <RelativeLayout android:id="@+id/choiceness_head" android:layout_width="fill_parent" 
          android:layout_height="0dip" 
          android:layout_weight="1.3">
             <com.bld.widget.ViewFlow android:id="@+id/viewflow" 
@@ -20,7 +20,7 @@
                 android:layout_height="wrap_content" 
                 android:layout_alignParentRight="true" 
                 android:layout_alignParentBottom="true" />
-        </RelativeLayout>  
+        </RelativeLayout>  -->
   <LinearLayout 
                 android:orientation="vertical"    
                 android:layout_width="fill_parent" 
@@ -28,13 +28,12 @@
                  android:layout_weight="2.9"    
                 android:gravity="center_horizontal">    
                
-                <com.bld.view.MainGridView android:id="@+id/gridview_main" 
-                        android:layout_width="fill_parent" 
+                <ListView android:id="@+id/gridview_main" 
+                        android:layout_width="match_parent" 
                         android:layout_height="fill_parent" 
-                        android:numColumns="3" 
-                        android:padding="10dp" 
-                        android:horizontalSpacing="4dp" 
-                        android:verticalSpacing="4dp" 
+
+                        android:padding="0.5dp" 
+                      
                         android:gravity="center"/>    
         </LinearLayout>   
    

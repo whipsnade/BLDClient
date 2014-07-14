@@ -9,12 +9,23 @@
         android:background="@color/white"
         android:gravity="center"
         android:orientation="vertical" >
-
+<RelativeLayout 
+      android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
         <ImageView android:id="@+id/ImageView01_checklayout"
                android:layout_width="150dp" 
                android:layout_height="150dp">
                </ImageView>
 
+               <RadioButton
+                   android:id="@+id/pro_selector"
+                   android:layout_width="wrap_content"
+                   android:layout_height="wrap_content" 
+                    android:padding="10.0dip" 
+                    android:layout_alignParentLeft="true" 
+                android:layout_alignParentTop="true" />
+
+</RelativeLayout>
         <TextView
             android:id="@+id/title_view"
             android:layout_width="wrap_content"
