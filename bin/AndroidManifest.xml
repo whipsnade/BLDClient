@@ -36,6 +36,7 @@
          <activity android:name="com.bld.activity.SongActivity">
          </activity>
          <activity android:name="com.bld.activity.HomeActivity"></activity>
+          <activity android:name="com.bld.activity.ProductDetailActivity"></activity>
          <activity android:name="com.bld.activity.CaptureActivity"
 			android:theme="@android:style/Theme.NoTitleBar.Fullscreen"
 			android:screenOrientation="landscape"

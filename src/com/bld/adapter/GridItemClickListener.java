@@ -7,3 +7,4 @@ public interface GridItemClickListener {
 	void onGridItemClicked(View v, int position, long itemId);
 
 }
+

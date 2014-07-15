@@ -1,21 +1,28 @@
 package com.bld.activity;
 
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
+import java.util.List;
 import java.util.Vector;
 
 import com.bld.R;
 import com.bld.code.camera.CameraManager;
 import com.bld.code.decoding.CaptureActivityHandler;
 import com.bld.code.decoding.InactivityTimer;
+import com.bld.data.DataBuilder;
+import com.bld.object.Product;
 import com.bld.view.ViewfinderView;
 import com.google.zxing.BarcodeFormat;
 import com.google.zxing.Result;
 import android.app.Activity;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.media.MediaPlayer;
 import android.media.MediaPlayer.OnCompletionListener;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.Message;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.SurfaceHolder;
 import android.view.View;
@@ -39,7 +46,8 @@ public class CaptureActivity extends Activity{
 	private State state;
 	SurfaceView surfaceView;
 	SurfaceHolder surfaceHolder;
-
+	String getCode;
+	
 	private enum State {
 	    SCANNING,
 	    SHOWING,
@@ -125,14 +133,9 @@ public class CaptureActivity extends Activity{
 		surfaceHolder.removeCallback(callbacker);
 		txtResult.setText(obj.getBarcodeFormat().toString() + ":"
 				+ obj.getText());
-		
-//		
-//		state=State.SHOWING;
-//		Intent toplantdetail=new Intent();
-//		toplantdetail.setClass(CaptureActivity.this, PlantDetail.class);
-//		toplantdetail.putExtra("id", "0");
-//		toplantdetail.putExtra("name", "����");
-//		startActivity(toplantdetail);
+		getCode=obj.getText();
+		 new Thread(getProductByCode).start();
+
 		
 	}
 	
@@ -179,5 +182,27 @@ public class CaptureActivity extends Activity{
 			mediaPlayer.seekTo(0);
 		}
 	};
+	
+	
+			 
+	Runnable getProductByCode = new Runnable(){  
+   	 @Override  
+		 public void run() {
+   		try {
+			Product pro = DataBuilder.GetInstence().getByCodeProduct(getCode);
+			if(pro!=null){
+				Intent prodetail = new Intent();
+				prodetail.setClass(CaptureActivity.this, ProductDetailActivity.class);
+				
+				prodetail.putExtra("selected_product",pro);
+				startActivity(prodetail);
+				//openProductDetail.sendMessage(openProductDetail.obtainMessage(25, pro));
+			}
+		} catch (UnsupportedEncodingException e) {
+			// TODO Auto-generated catch block
+			Log.e("扫码错误", e.getMessage());
+		}
+   	 }
+   };
 
 }

@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Vector;    
 
 import com.bld.R;
+import com.bld.activity.HomeActivity;
 import com.bld.object.Product;
 import com.bld.task.HttpResourcesTask;
 import com.bld.task.Task;
@@ -13,11 +14,14 @@ import com.bld.task.HttpResourcesTask.CacheType;
 import com.bld.task.HttpResourcesTask.HttpType;
 import com.bld.task.Task.OnFinishListen;
 import com.bld.utils.ConnectionUtils;
+import com.bld.widget.SelectProductPopupWindow;
+
 
 import android.content.Context;    
 import android.graphics.drawable.Drawable;
 import android.os.Handler;
 import android.os.Message;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;    
 import android.view.ViewGroup;    
@@ -34,7 +38,7 @@ public class ImageAdapter extends ListAsGridBaseAdapter  implements GridItemClic
      private int lastPosition = -1;            
      private boolean multiChoose;               
      private LayoutInflater mInflater =null;
-     
+ 	
      
  	Integer tasksOver = 0;
  	Integer tasksLength=0;

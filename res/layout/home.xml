@@ -3,6 +3,7 @@
     android:layout_width="fill_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:id="@+id/main"
     >
     
  <!--  <RelativeLayout android:id="@+id/choiceness_head" android:layout_width="fill_parent" 

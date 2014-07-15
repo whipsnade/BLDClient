@@ -29,6 +29,12 @@ public class HttpRequest {
 		return request(url);
 	}
 	
+	public static String getProductByCode(String code) {
+		
+		String url=URL+ConnectionUtils.getInstance().getProductByCodeUrl(code);
+		Log.e("条形码获取产品", ""+url);
+		return request(url);
+	}
 		
 	private static String request(String url)
 	{

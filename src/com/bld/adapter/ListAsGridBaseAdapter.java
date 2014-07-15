@@ -25,12 +25,14 @@ public abstract class ListAsGridBaseAdapter extends BaseAdapter {
 		@Override
 		public void onClick(View v) {
 			onGridItemClicked (v, mPosition);
+			onGridItemSelected(v,mPosition);
 		}
 	}
 
 	private int mNumColumns;
 	private Context mContext;
 	private GridItemClickListener mGridItemClickListener;
+	private GridItemSelectListener mGridItemSelectListener;
 	private int mBackgroundResource = -1;
 
 	public ListAsGridBaseAdapter(Context context) {
@@ -45,10 +47,19 @@ public abstract class ListAsGridBaseAdapter extends BaseAdapter {
 	public final void setOnGridClickListener(GridItemClickListener listener) {
 		mGridItemClickListener = listener;
 	}
-
 	private final void onGridItemClicked(View v, int position) {
 		if (mGridItemClickListener != null) {
 			mGridItemClickListener.onGridItemClicked(v, position, getItemId(position));
+		}
+	}
+	
+	public final void setOnGridSelectListener(GridItemSelectListener listener) {
+		mGridItemSelectListener = listener;
+	}
+	
+	private final void onGridItemSelected(View v, int position) {
+		if (mGridItemSelectListener != null) {
+			mGridItemSelectListener.onGridItemSelected(v, position, getItemId(position));
 		}
 	}
 

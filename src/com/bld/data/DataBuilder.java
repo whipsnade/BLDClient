@@ -69,7 +69,7 @@ public class DataBuilder {
 		ArrayList<Suggest> list = new  ArrayList<Suggest>();
 		String res = HttpRequest.getAllSuggest();
 		res=URLDecoder.decode(res, "utf-8");
-		if(res!=null)
+		if(res!=null && !res.contentEquals("null"))
 		{
 			try
 			{
@@ -85,11 +85,40 @@ public class DataBuilder {
                  }
 			}catch(JSONException e) 
 			{  
-	            throw new RuntimeException(e);  
+	            //throw new RuntimeException(e);  
 	        }  
 				
 		}
 		return list;
+	}
+	
+	public Product getByCodeProduct(String code) throws UnsupportedEncodingException
+	{
+		String res = HttpRequest.getProductByCode(code);
+		res=URLDecoder.decode(res, "utf-8");
+		if(res!=null)
+		{
+			try
+			{
+				JSONObject jsonObject2 =new  JSONObject(res); 
+				
+                      Product pro = new Product(); 
+                      pro.setImg(jsonObject2.getString("img")); 
+                      pro.setPrice(jsonObject2.getLong("price"));                 
+                      pro.setId(jsonObject2.getString("id"));
+                      pro.setName(jsonObject2.getString("name"));
+                      pro.setCode(jsonObject2.getString("code"));
+                      pro.setClassId(jsonObject2.getString("classId"));
+                      pro.setDescription(jsonObject2.getString("description"));
+                      return pro;
+               
+			}catch(JSONException e) 
+			{  
+	            throw new RuntimeException(e);  
+	        }  
+				
+		}
+		return null;
 	}
 	
 

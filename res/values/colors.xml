@@ -7,6 +7,7 @@
 	<color name="gray">#696969</color>
 	<color name="red">#FF0000</color>
 	<color name="contents_text">#ff000000</color>
+	
   <color name="encode_view">#ffffffff</color>
   <color name="help_button_view">#ffcccccc</color>
   <color name="help_view">#ff404040</color>

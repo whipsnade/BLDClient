@@ -12,11 +12,19 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.View.OnClickListener;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.RadioButton;
+
 import com.bld.R;
+import com.bld.adapter.GridItemClickListener;
+import com.bld.adapter.GridItemSelectListener;
 import com.bld.adapter.ImageAdapter;
 import com.bld.adapter.ViewFlowImageAdapter;
 import com.bld.data.DataBuilder;
@@ -30,6 +38,7 @@ import com.bld.task.HttpResourcesTask.HttpType;
 import com.bld.task.Task.OnFinishListen;
 import com.bld.utils.ConnectionUtils;
 import com.bld.widget.CircleFlowIndicator;
+import com.bld.widget.SelectProductPopupWindow;
 import com.bld.widget.ViewFlow;
 
 
@@ -38,7 +47,7 @@ import com.bld.widget.ViewFlow;
 
 
 @SuppressLint("HandlerLeak")
-public class HomeActivity extends Activity {
+public class HomeActivity extends Activity implements GridItemSelectListener{
 	ListView listView;  
 	ImageAdapter madapter;
 	ViewFlow viewFlow;
@@ -48,7 +57,7 @@ public class HomeActivity extends Activity {
 	Activity context;
 	Integer tasksOver = 0;
 	int tasksLength; 
-
+	SelectProductPopupWindow menuWindow;
 	 
 	ArrayList<Product> ProductList = new ArrayList<Product>();
 	ArrayList<Suggest> SuggestList = new ArrayList<Suggest>();
@@ -63,8 +72,7 @@ public class HomeActivity extends Activity {
 		header = LayoutInflater.from(this).inflate(R.layout.viewflow, null);
 		viewFlow = (ViewFlow) header.findViewById(R.id.viewflow);
 	    indic  = (CircleFlowIndicator) header.findViewById(R.id.viewflowindic);
-//		viewFlow = (ViewFlow) findViewById(R.id.viewflow);
-//	    indic  = (CircleFlowIndicator) findViewById(R.id.viewflowindic);
+
 		listView =  (ListView) findViewById(R.id.gridview_main);
 		viewFlow.mListView=listView;
 		listView.addHeaderView(header);
@@ -75,7 +83,7 @@ public class HomeActivity extends Activity {
 		madapter.setNumColumns(3);
 
 		madapter.setOnGridClickListener(madapter);
-		
+		madapter.setOnGridSelectListener(this);
 		
 		 new Thread(downloadRun).start();
 		 new Thread(suggestRun).start();
@@ -84,6 +92,39 @@ public class HomeActivity extends Activity {
 		
 	}
 	
+;  
+	    @Override
+	    public void onGridItemSelected(View v, int position, long itemId) {
+	    	// TODO Auto-generated method stub
+	    	menuWindow = new SelectProductPopupWindow(HomeActivity.this, itemsOnClick);
+	    	
+	    	menuWindow.setHeight(130);
+	    	 
+			menuWindow.showAtLocation(HomeActivity.this.findViewById(R.id.main), Gravity.BOTTOM|Gravity.CENTER_HORIZONTAL, 0, 0); 
+	    }
+	    
+	    
+	    private OnClickListener  itemsOnClick = new OnClickListener(){
+
+			public void onClick(View v) {
+				menuWindow.dismiss();
+				switch (v.getId()) {
+				case R.id.btn_buy:
+					break;
+				case R.id.btn_add_cart:				
+					break;
+				default:
+					break;
+				}
+				
+					
+			}
+	    	
+	    };
+	    
+	    
+	    
+	    
 	Handler handler = new Handler(){
 		  @Override
 		@SuppressWarnings("unchecked")
@@ -186,5 +227,9 @@ public class HomeActivity extends Activity {
 	 }
 	} 
 };
+
+
+
+
 
 }
