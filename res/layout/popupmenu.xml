@@ -13,7 +13,7 @@
     android:gravity="center_horizontal"
     android:orientation="horizontal"
     android:layout_alignParentBottom="true"
-   android:background="@color/red"
+   android:background="@color/white"
      >
 
     
@@ -27,7 +27,7 @@
         android:layout_weight="1"
         android:text="购买"
         android:textStyle="bold"
-        android:background="@color/gray"
+        
          />
 
     <Button
@@ -40,7 +40,7 @@
         android:text="加入购物车"
 		android:layout_weight="1"
          android:textStyle="bold"
-          android:background="@color/gray"
+         
          />
 
  

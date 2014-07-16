@@ -89,14 +89,7 @@ public class MainActivity extends TabActivity {
 
 			intent.putExtra("str", "come from first activity");
 
-			startActivity(intent);//无返回值的调用,启动一个明确的activity
-
-			//startActivityForResult(intent, REQUEST_CODE);
-
-			/*调用打电话的intent,启动一个未指明的activity，由android去寻找
-
-			 * Intent intent = new Intent();*/
-
+			startActivity(intent);
     	}
     	return true;
     }

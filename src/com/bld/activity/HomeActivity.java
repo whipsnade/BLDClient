@@ -18,7 +18,9 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemSelectedListener;
+import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.RadioButton;
 
@@ -58,7 +60,7 @@ public class HomeActivity extends Activity implements GridItemSelectListener{
 	Integer tasksOver = 0;
 	int tasksLength; 
 	SelectProductPopupWindow menuWindow;
-	 
+	LinearLayout popmenu;
 	ArrayList<Product> ProductList = new ArrayList<Product>();
 	ArrayList<Suggest> SuggestList = new ArrayList<Suggest>();
 
@@ -96,22 +98,26 @@ public class HomeActivity extends Activity implements GridItemSelectListener{
 	    @Override
 	    public void onGridItemSelected(View v, int position, long itemId) {
 	    	// TODO Auto-generated method stub
-	    	menuWindow = new SelectProductPopupWindow(HomeActivity.this, itemsOnClick);
+	    	//menuWindow = new SelectProductPopupWindow(HomeActivity.this, itemsOnClick);
 	    	
-	    	menuWindow.setHeight(130);
-	    	 
-			menuWindow.showAtLocation(HomeActivity.this.findViewById(R.id.main), Gravity.BOTTOM|Gravity.CENTER_HORIZONTAL, 0, 0); 
+	    	//menuWindow.setHeight(130);
+	    	popmenu= (LinearLayout)HomeActivity.this.findViewById(R.id.pop_layout1);
+	    	popmenu.setVisibility(View.VISIBLE);
+	    	Button btn = (Button)HomeActivity.this.findViewById(R.id.btn_add_cancel);
+	    	btn.setOnClickListener(itemsOnClick);
+			//menuWindow.showAtLocation(HomeActivity.this.findViewById(R.id.main), Gravity.BOTTOM|Gravity.CENTER_HORIZONTAL, 0, 0); 
 	    }
 	    
 	    
 	    private OnClickListener  itemsOnClick = new OnClickListener(){
 
 			public void onClick(View v) {
-				menuWindow.dismiss();
+				//menuWindow.dismiss();
+				popmenu.setVisibility(View.GONE);
 				switch (v.getId()) {
-				case R.id.btn_buy:
+				case R.id.btn_buy1:
 					break;
-				case R.id.btn_add_cart:				
+				case R.id.btn_add_cart1:				
 					break;
 				default:
 					break;
