@@ -14,7 +14,7 @@ import com.bld.task.HttpResourcesTask.CacheType;
 import com.bld.task.HttpResourcesTask.HttpType;
 import com.bld.task.Task.OnFinishListen;
 import com.bld.utils.ConnectionUtils;
-import com.bld.widget.SelectProductPopupWindow;
+
 
 
 import android.content.Context;    
@@ -33,12 +33,10 @@ import android.widget.TextView;
 public class ImageAdapter extends ListAsGridBaseAdapter  implements GridItemClickListener {
 	 private Context mContext;                     
      private Vector<Integer> mImageIds = new Vector<Integer>();      
-     private List<Product> pro_list = new ArrayList<Product> ();
-     private List<String> select_list = new ArrayList<String> ();
      private int lastPosition = -1;            
      private boolean multiChoose;               
      private LayoutInflater mInflater =null;
- 	
+     HomeActivity ac;
      
  	Integer tasksOver = 0;
  	Integer tasksLength=0;
@@ -52,7 +50,7 @@ public class ImageAdapter extends ListAsGridBaseAdapter  implements GridItemClic
              mContext = c;    
             // multiChoose = isMulti;    
              this.mInflater = LayoutInflater.from(c);
-         
+        	 ac = (HomeActivity)mContext;
 
      }    
      
@@ -64,14 +62,12 @@ public class ImageAdapter extends ListAsGridBaseAdapter  implements GridItemClic
 //
 // }    
    
-     public void setData(List<Product> list){
-    	 pro_list=list;   
-     }
+
           
      @Override 
      public int getItemCount() {    
              // TODO Auto-generated method stub    
-             return pro_list.size();    
+             return ac.ProductList.size();    
      }    
   
      @Override 
@@ -92,8 +88,9 @@ public class ImageAdapter extends ListAsGridBaseAdapter  implements GridItemClic
      @Override 
      public View getItemView(int position, View convertView, ViewGroup parent) {    
    
-    	 Product pro = pro_list.get(position);
- 
+    	 Product pro = ac.ProductList.get(position);
+
+
     	 String url=ConnectionUtils.getInstance().ImageUrl+pro.getImg();
     	 String title=pro.getName();
     	 String ID=pro.getId();
@@ -107,7 +104,7 @@ public class ImageAdapter extends ListAsGridBaseAdapter  implements GridItemClic
 			    			 TextView textView=(TextView)convertView.findViewById(R.id.title_view);
 			    			 textView.setText(title);
 			    			 RadioButton selector=(RadioButton) convertView.findViewById(R.id.pro_selector);
-			    				if(select_list.contains(ID))
+			    				if(ac.select_list.contains(pro))
 			    	 			{
 			    	 				
 			    	 				selector.setChecked(true);
@@ -225,17 +222,7 @@ public class ImageAdapter extends ListAsGridBaseAdapter  implements GridItemClic
      @Override
  	public void onGridItemClicked(View view, int position, long arg2) {
  		// TODO Auto-generated method stub
- 		RadioButton selector=(RadioButton) view.findViewById(R.id.pro_selector);
- 		Product pro = pro_list.get(position);
- 			if(select_list.contains(pro.getId()))
- 			{
- 				selector.setChecked(false);
- 				select_list.remove(pro.getId());
- 			}
- 			else{
- 				selector.setChecked(true);
- 				select_list.add(pro.getId());
- 			}
+ 		
  	}
 
 	

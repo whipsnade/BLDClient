@@ -4,6 +4,8 @@ import java.io.IOException;
 import java.util.List;
 
 import com.bld.R;
+import com.bld.object.Product;
+
 import android.app.TabActivity;
 import android.content.Context;
 import android.content.Intent;
@@ -13,6 +15,8 @@ import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -143,7 +147,7 @@ public class MainActivity extends TabActivity {
     	}
 
     };
-    
+
 //    @Override      
 //    protected void onResume() {            
 //    	super.onResume();           

@@ -40,7 +40,7 @@ import com.bld.task.HttpResourcesTask.HttpType;
 import com.bld.task.Task.OnFinishListen;
 import com.bld.utils.ConnectionUtils;
 import com.bld.widget.CircleFlowIndicator;
-import com.bld.widget.SelectProductPopupWindow;
+
 import com.bld.widget.ViewFlow;
 
 
@@ -59,9 +59,10 @@ public class HomeActivity extends Activity implements GridItemSelectListener{
 	Activity context;
 	Integer tasksOver = 0;
 	int tasksLength; 
-	SelectProductPopupWindow menuWindow;
+
 	LinearLayout popmenu;
-	ArrayList<Product> ProductList = new ArrayList<Product>();
+	public ArrayList<Product> ProductList = new ArrayList<Product>();
+	public ArrayList<Product> select_list = new ArrayList<Product>();
 	ArrayList<Suggest> SuggestList = new ArrayList<Suggest>();
 
 	@Override
@@ -95,49 +96,13 @@ public class HomeActivity extends Activity implements GridItemSelectListener{
 	}
 	
 ;  
-	    @Override
-	    public void onGridItemSelected(View v, int position, long itemId) {
-	    	// TODO Auto-generated method stub
-	    	//menuWindow = new SelectProductPopupWindow(HomeActivity.this, itemsOnClick);
-	    	
-	    	//menuWindow.setHeight(130);
-	    	popmenu= (LinearLayout)HomeActivity.this.findViewById(R.id.pop_layout1);
-	    	popmenu.setVisibility(View.VISIBLE);
-	    	Button btn = (Button)HomeActivity.this.findViewById(R.id.btn_add_cancel);
-	    	btn.setOnClickListener(itemsOnClick);
-			//menuWindow.showAtLocation(HomeActivity.this.findViewById(R.id.main), Gravity.BOTTOM|Gravity.CENTER_HORIZONTAL, 0, 0); 
-	    }
-	    
-	    
-	    private OnClickListener  itemsOnClick = new OnClickListener(){
-
-			public void onClick(View v) {
-				//menuWindow.dismiss();
-				popmenu.setVisibility(View.GONE);
-				switch (v.getId()) {
-				case R.id.btn_buy1:
-					break;
-				case R.id.btn_add_cart1:				
-					break;
-				default:
-					break;
-				}
-				
-					
-			}
-	    	
-	    };
-	    
-	    
+	 
 	    
 	    
 	Handler handler = new Handler(){
 		  @Override
 		@SuppressWarnings("unchecked")
 		  public void handleMessage(Message msg) {
-			List<Product> list =  (List<Product>)msg.obj;
-			//madapter = new ImageAdapter(MainActivity.this,list); 
-			madapter.setData(list);
 			listView.setAdapter(madapter);
 
 		  }  
@@ -234,6 +199,51 @@ public class HomeActivity extends Activity implements GridItemSelectListener{
 	} 
 };
 
+
+@Override
+public void onGridItemSelected(View view, int position, long itemId) {
+	// TODO Auto-generated method stub
+	RadioButton selector=(RadioButton) view.findViewById(R.id.pro_selector);
+		Product pro = ProductList.get(position);
+			if(select_list.contains(pro))
+			{
+				selector.setChecked(false);
+				select_list.remove(pro);
+				
+			}
+			else{
+				selector.setChecked(true);
+				select_list.add(pro);
+			}
+			
+	popmenu= (LinearLayout)HomeActivity.this.findViewById(R.id.pop_layout);
+	popmenu.setVisibility(View.VISIBLE);
+	ImageView btn = (ImageView)HomeActivity.this.findViewById(R.id.btn_add_cancel);
+	btn.setOnClickListener(popMenuitemsOnClick);
+	if(select_list.size()<=0){
+		popmenu.setVisibility(View.GONE);
+	}
+}
+
+
+private OnClickListener  popMenuitemsOnClick = new OnClickListener(){
+
+	public void onClick(View v) {
+		//menuWindow.dismiss();
+		popmenu.setVisibility(View.GONE);
+		switch (v.getId()) {
+		case R.id.btn_buy:
+			break;
+		case R.id.btn_add_cart:				
+			break;
+		default:
+			break;
+		}
+		
+			
+	}
+	
+};
 
 
 
