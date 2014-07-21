@@ -43,6 +43,10 @@
 			android:configChanges="orientation|keyboardHidden"
 			android:windowSoftInputMode="stateAlwaysHidden">
 		</activity>
+         <activity android:name="com.bld.activity.OrderActivity"
+             android:windowSoftInputMode="adjustPan"></activity>
+          <activity android:name="com.bld.activity.CartActivity"
+             android:windowSoftInputMode="adjustPan"></activity>
     </application>
 
 </manifest>

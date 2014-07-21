@@ -12,52 +12,69 @@ import com.bld.utils.ConnectionUtils;
 import android.util.Log;
 
 public class HttpRequest {
-	
-	static String URL=ConnectionUtils.getInstance().ServerPath;
-	
+
+	static String URL = ConnectionUtils.getInstance().ServerPath;
+
 	public static String getAllProduct(int index) {
-		
-		String url=URL+ConnectionUtils.getInstance().ProductUrl;
-		Log.e("更新", ""+url);
+
+		String url = URL + ConnectionUtils.getInstance().ProductUrl;
+		Log.e("更新", "" + url);
 		return request(url);
 	}
-	
+
 	public static String getAllSuggest() {
-		
-		String url=URL+ConnectionUtils.getInstance().getAllSuggestUrl;
-		Log.e("更新", ""+url);
+
+		String url = URL + ConnectionUtils.getInstance().getAllSuggestUrl;
+		Log.e("更新", "" + url);
 		return request(url);
 	}
-	
+
 	public static String getProductByCode(String code) {
-		
-		String url=URL+ConnectionUtils.getInstance().getProductByCodeUrl(code);
-		Log.e("条形码获取产品", ""+url);
+
+		String url = URL
+				+ ConnectionUtils.getInstance().getProductByCodeUrl(code);
+		Log.e("条形码获取产品", "" + url);
 		return request(url);
 	}
-		
-	private static String request(String url)
-	{
+
+	public static String createOrder(String ids, double latitude,
+			double longitude) {
+
+		String url = URL
+				+ ConnectionUtils.getInstance().createOrder(ids, latitude,
+						longitude);
+		Log.e("创建订单返回商品和价格", "" + url);
+		return request(url);
+	}
+
+	public static String getProductByIDs(String ids) {
+
+		String url = URL + ConnectionUtils.getInstance().getProductByIDs(ids);
+		Log.e("根据产品id返回产品列表", "" + url);
+		return request(url);
+	}
+
+	private static String request(String url) {
 		HttpClient httpClient = new DefaultHttpClient();
-		HttpGet httpget=  new HttpGet(url);
+		HttpGet httpget = new HttpGet(url);
 		HttpResponse httpResponse;
 		String response = null;
 
-			try {
+		try {
 			httpResponse = httpClient.execute(httpget);
 			int statusCode = httpResponse.getStatusLine().getStatusCode();
 			if (statusCode == HttpStatus.SC_OK) {
-			System.out.println("get information 200");
-			response = EntityUtils.toString(httpResponse.getEntity());
+				System.out.println("get information 200");
+				response = EntityUtils.toString(httpResponse.getEntity());
 			} else {
-			response = "statusNum: " + statusCode;
+				response = "statusNum: " + statusCode;
 			}
-			} catch (Exception e) {
-				
-				Log.e("错误", e.getMessage());
-			}
-			return response;
-		
+		} catch (Exception e) {
+
+			// Log.e("错误", e.getMessage());
+		}
+		return response;
+
 	}
-	
+
 }

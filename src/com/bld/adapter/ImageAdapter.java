@@ -27,6 +27,7 @@ import android.view.View;
 import android.view.ViewGroup;    
 import android.view.View.OnClickListener;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.TextView;
 
@@ -103,14 +104,15 @@ public class ImageAdapter extends ListAsGridBaseAdapter  implements GridItemClic
 			    			 ImageView imageView=(ImageView)convertView.findViewById(R.id.ImageView01_checklayout);
 			    			 TextView textView=(TextView)convertView.findViewById(R.id.title_view);
 			    			 textView.setText(title);
-			    			 RadioButton selector=(RadioButton) convertView.findViewById(R.id.pro_selector);
+			    			 LinearLayout selector = (LinearLayout) convertView
+			    						.findViewById(R.id.border_linear);
 			    				if(ac.select_list.contains(pro))
 			    	 			{
 			    	 				
-			    	 				selector.setChecked(true);
+			    					selector.setBackgroundResource(R.color.red);
 			    	 			}
 			    				else{
-			    					selector.setChecked(false);
+			    					selector.setBackgroundResource(R.color.white);
 			    				}
 			     			 SoftReference<Drawable> sr = imageCache.get(url);
 			     			 if(sr.get()!=null){
@@ -124,8 +126,9 @@ public class ImageAdapter extends ListAsGridBaseAdapter  implements GridItemClic
 		 imageView.setImageResource(R.color.white);
 		 TextView textView=(TextView)convertView.findViewById(R.id.title_view);
 		 textView.setText(title);
-		 RadioButton selector=(RadioButton) convertView.findViewById(R.id.pro_selector);
-		 selector.setChecked(false);
+		 LinearLayout selector = (LinearLayout) convertView
+					.findViewById(R.id.border_linear);
+		 selector.setBackgroundResource(R.color.white);
 		 asyncImageLoad(imageView, url);
 		 convertView.setOnClickListener(imageOnClickListen);
 

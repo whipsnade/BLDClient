@@ -10,4 +10,8 @@
 	<string name="main_me">我</string>
 	<string name="action_address">地址</string>
 	<string name="action_code">扫码</string>
+	<string name="num_add">+</string>
+	<string name="num_subtract">-</string>
+	<string name="num_default">1</string>
+	<string name="order_sum">总价：</string>
 </resources>

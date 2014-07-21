@@ -57,7 +57,7 @@ public class DataBuilder {
                  }
 			}catch(JSONException e) 
 			{  
-	            throw new RuntimeException(e);  
+	           // throw new RuntimeException(e);  
 	        }  
 				
 		}
@@ -114,12 +114,81 @@ public class DataBuilder {
                
 			}catch(JSONException e) 
 			{  
-	            throw new RuntimeException(e);  
+	           // throw new RuntimeException(e);  
 	        }  
 				
 		}
 		return null;
 	}
 	
-
+	public ArrayList<Product> createOrder(String ids,double latitude,double longitude) throws UnsupportedEncodingException
+	{
+		ArrayList<Product> list = new  ArrayList<Product>();
+		String res = HttpRequest.createOrder(ids, latitude, longitude);
+		res=URLDecoder.decode(res, "utf-8");
+		if(res!=null)
+		{
+			try
+			{
+				JSONArray jsonArray =new  JSONArray(res); 
+				//JSONObject jsonObject = new JSONObject(res);
+			//	JSONArray jsonArray = jsonObject.getJSONArray("nodes"); 
+				for(int i=0;i<jsonArray.length();i++){ 
+                      JSONObject jsonObject2 = ((JSONObject)jsonArray.opt(i));
+                      Product pro = new Product(); 
+                      pro.setImg(jsonObject2.getString("img")); 
+                      pro.setPrice(jsonObject2.getDouble("price"));                 
+                      pro.setId(jsonObject2.getString("id"));
+                      pro.setName(jsonObject2.getString("name"));
+                      pro.setCode(jsonObject2.getString("code"));
+                      pro.setClassId(jsonObject2.getString("classId"));
+                      pro.setDescription(jsonObject2.getString("description"));
+                      pro.setNum(1);
+                      list.add(pro); 
+                    //  ProductList.put(pro.getSid(),pro); 
+                 }
+			}catch(JSONException e) 
+			{  
+	            //throw new RuntimeException(e);  
+	        }  
+				
+		}
+		return list;
+	}
+	
+	
+	public ArrayList<Product> getProductByIDs(String ids) throws UnsupportedEncodingException
+	{
+		ArrayList<Product> list = new  ArrayList<Product>();
+		String res = HttpRequest.getProductByIDs(ids);
+		res=URLDecoder.decode(res, "utf-8");
+		if(res!=null)
+		{
+			try
+			{
+				JSONArray jsonArray =new  JSONArray(res); 
+				//JSONObject jsonObject = new JSONObject(res);
+			//	JSONArray jsonArray = jsonObject.getJSONArray("nodes"); 
+				for(int i=0;i<jsonArray.length();i++){ 
+                      JSONObject jsonObject2 = ((JSONObject)jsonArray.opt(i));
+                      Product pro = new Product(); 
+                      pro.setImg(jsonObject2.getString("img")); 
+                      pro.setPrice(jsonObject2.getDouble("price"));                 
+                      pro.setId(jsonObject2.getString("id"));
+                      pro.setName(jsonObject2.getString("name"));
+                      pro.setCode(jsonObject2.getString("code"));
+                      pro.setClassId(jsonObject2.getString("classId"));
+                      pro.setDescription(jsonObject2.getString("description"));
+                      pro.setNum(1);
+                      list.add(pro); 
+                    //  ProductList.put(pro.getSid(),pro); 
+                 }
+			}catch(JSONException e) 
+			{  
+	            //throw new RuntimeException(e);  
+	        }  
+				
+		}
+		return list;
+	}
 }

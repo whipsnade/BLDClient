@@ -20,6 +20,14 @@ public class ConnectionUtils {
 	public String getProductByCodeUrl(String code){
 		return "ProductUtilService/getProductByCode?code="+code;
 		}
+	
+	public String createOrder(String ids,double latitude,double longitude){
+		return "OrderUtilService/createOrder?ids="+ids+"&latitude="+latitude+"&longitude="+longitude;
+		}
+	
+	public String getProductByIDs(String ids){
+		return "ProductUtilService/getProductByIDs?ids="+ids;
+		}
 }
 	
 	
