@@ -3,9 +3,14 @@ package com.bld.utils;
 public class ConnectionUtils {
 	
 	private static ConnectionUtils _instence;
-	public String ImageUrl="http://whipsnade.gicp.net:8080/ImgServer/ProductImg/";
-	public String SuggestImageUrl="http://whipsnade.gicp.net:8080/ImgServer/SuggestImg/";
-	public String ServerPath="http://whipsnade.gicp.net:8080/BLDService/";
+//	public String ImageUrl="http://whipsnade.gicp.net:8080/ImgServer/ProductImg/";
+//	public String SuggestImageUrl="http://whipsnade.gicp.net:8080/ImgServer/SuggestImg/";
+//	public String ServerPath="http://whipsnade.gicp.net:8080/BLDService/";
+	
+	
+	public String ImageUrl="http://192.168.1.11:8090/ImgServer/ProductImg/";
+	public String SuggestImageUrl="http://192.168.1.11:8090/ImgServer/SuggestImg/";
+	public String ServerPath="http://192.168.1.11:8090/BLDService/";
 	public static ConnectionUtils getInstance(){
 		
 		if(_instence==null)

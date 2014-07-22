@@ -118,6 +118,7 @@ public class CartListAdapter extends BaseAdapter {
 				}
 				
 				ac.RefreshSelect();
+				ac.RefreshSumPrice();
 			}
 			
 		});
