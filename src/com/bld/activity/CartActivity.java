@@ -40,8 +40,9 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 public class CartActivity extends Activity {
-	public Map<Product,Boolean> ProductList = new HashMap<Product,Boolean>();
+	public Map<Product, Boolean> ProductList = new HashMap<Product, Boolean>();
 	String selectIDS;
+
 	ListView list;
 	CartListAdapter listadpter;
 	TextView sumPriceText;
@@ -54,49 +55,66 @@ public class CartActivity extends Activity {
 		setContentView(R.layout.cart_list);
 		list = (ListView) findViewById(R.id.cart_list);
 		listadpter = new CartListAdapter(this);
-		
+
 		selectIDS = SharePreferencesOperator.GetInstence().getCartData(this);
 		sumPriceText = (TextView) findViewById(R.id.cart_sum_price);
-		
-		all_selector= (CheckBox)findViewById(R.id.all_selector);
+
+		all_selector = (CheckBox) findViewById(R.id.all_selector);
 		all_selector.setChecked(true);
 		all_selector.setOnCheckedChangeListener(checkedchange);
 		Button btn_buy = (Button) findViewById(R.id.cart_buy);
 		btn_buy.setOnClickListener(popMenuitemsOnClick);
-		
+
 		if (selectIDS.length() > 0) {
 			new Thread(getproduct).start();
 		}
 
 	}
 
-	OnCheckedChangeListener checkedchange = new OnCheckedChangeListener(){
+	@Override
+	protected void onResume() {
+		// TODO Auto-generated method stub
+		super.onResume();
+
+		if (!selectIDS.contentEquals(SharePreferencesOperator.GetInstence()
+				.getCartData(this))) {
+			selectIDS = SharePreferencesOperator.GetInstence()
+					.getCartData(this);
+			if (selectIDS.length() > 0) {
+				
+				new Thread(getproduct).start();
+			}
+		}
+	}
+
+	OnCheckedChangeListener checkedchange = new OnCheckedChangeListener() {
 
 		@Override
 		public void onCheckedChanged(CompoundButton buttonView,
 				boolean isChecked) {
 			// TODO Auto-generated method stub
-			if(isChecked){
+			if (isChecked) {
 				for (int index = 0; index < list.getChildCount(); index++) {
 					LinearLayout layout = (LinearLayout) list.getChildAt(index);
-					CheckBox checkBox = (CheckBox) layout.findViewById(R.id.selector);
+					CheckBox checkBox = (CheckBox) layout
+							.findViewById(R.id.selector);
 					checkBox.setChecked(true);
 					allSelect(true);
-					}
+				}
 			}
-//			else{
-//				for (int index = 0; index < list.getChildCount(); index++) {
-//					LinearLayout layout = (LinearLayout) list.getChildAt(index);
-//					CheckBox checkBox = (CheckBox) layout.findViewById(R.id.selector);
-//					checkBox.setChecked(false);
-//					allSelect(false);
-//					}
-//			}
+			// else{
+			// for (int index = 0; index < list.getChildCount(); index++) {
+			// LinearLayout layout = (LinearLayout) list.getChildAt(index);
+			// CheckBox checkBox = (CheckBox)
+			// layout.findViewById(R.id.selector);
+			// checkBox.setChecked(false);
+			// allSelect(false);
+			// }
+			// }
 		}
-		
+
 	};
-	
-	
+
 	Handler handler = new Handler() {
 		@Override
 		@SuppressWarnings("unchecked")
@@ -112,12 +130,14 @@ public class CartActivity extends Activity {
 		public void run() {
 			// TODO Auto-generated method stub
 			try {
-				
-				List<Product> list=DataBuilder.GetInstence().getProductByIDs(
+
+				List<Product> list = DataBuilder.GetInstence().getProductByIDs(
 						selectIDS);
-			
-				for(int i=0;i<list.size();i++){
-					ProductList.put(list.get(i), true);
+				ProductList.clear();
+				for (int i = 0; i < list.size(); i++) {
+					if (!ProductList.containsKey(list.get(i))) {
+						ProductList.put(list.get(i), true);
+					}
 				}
 				handler.sendMessage(handler.obtainMessage(26, ""));
 			} catch (UnsupportedEncodingException e) {
@@ -128,64 +148,67 @@ public class CartActivity extends Activity {
 		}
 	};
 
-	
 	private OnClickListener popMenuitemsOnClick = new OnClickListener() {
 
 		public void onClick(View v) {
 			// menuWindow.dismiss();
-			
-				Intent intent = new Intent(CartActivity.this,
-						OrderActivity.class);
-				intent.putExtra("selectIDS", getSelectIDS());
-				startActivity(intent);
+
+			Intent intent = new Intent(CartActivity.this, OrderActivity.class);
+			intent.putExtra("selectIDS", getSelectIDS());
+			startActivity(intent);
 		}
 
 	};
-	
-	
+
 	public void RefreshSumPrice() {
 		double sum = 0;
-		for (int i = 0; i < ProductList.size(); i++) {
-			sum += (double) ((Product)ProductList.keySet().toArray()[i]).getNum()
-					*  ((Product)ProductList.keySet().toArray()[i]).getPrice();
+			
+		Set<Map.Entry<Product, Boolean>> entry = ProductList.entrySet();
+		for (Map.Entry<Product, Boolean> obj : entry) {
+
+			if (obj.getValue()) {
+				sum += (double) ((Product) obj.getKey())
+						.getNum()
+						* ((Product) obj.getKey()).getPrice();
+			}
 		}
 		DecimalFormat df = new java.text.DecimalFormat("#.00");
 		sumPriceText.setText(df.format(sum));
 	}
-	
-	private void allSelect(boolean flag){
-		Set<Map.Entry<Product,Boolean>> entry = ProductList.entrySet();  
-        for(Map.Entry<Product,Boolean> obj :entry){  
-        	obj.setValue(flag);
-        }
+
+	private void allSelect(boolean flag) {
+		Set<Map.Entry<Product, Boolean>> entry = ProductList.entrySet();
+		for (Map.Entry<Product, Boolean> obj : entry) {
+			obj.setValue(flag);
+		}
+		RefreshSumPrice();
 	}
-	
-	public void RefreshSelect(){
-		Set<Map.Entry<Product,Boolean>> entry = ProductList.entrySet();  
-        for(Map.Entry<Product,Boolean> obj :entry){  
-        	if(!obj.getValue()){
-        		all_selector.setChecked(false);
-        		return;
-        	}
-        }
-        all_selector.setChecked(true);
-        
+
+	public void RefreshSelect() {
+		Set<Map.Entry<Product, Boolean>> entry = ProductList.entrySet();
+		for (Map.Entry<Product, Boolean> obj : entry) {
+			if (!obj.getValue()) {
+				all_selector.setChecked(false);
+				return;
+			}
+		}
+		all_selector.setChecked(true);
+
 	}
-	
+
 	private String getSelectIDS() {
 
 		String rs = "";
-		Set<Map.Entry<Product,Boolean>> entry = ProductList.entrySet();  
-        for(Map.Entry<Product,Boolean> obj :entry){ 
-        	if (rs.length() > 0)
+		Set<Map.Entry<Product, Boolean>> entry = ProductList.entrySet();
+		for (Map.Entry<Product, Boolean> obj : entry) {
+			if (rs.length() > 0)
 				rs += ",";
-        	if(obj.getValue()){
-        		rs+=obj.getKey().getId();
-        	}
-        }
-		
+			if (obj.getValue()) {
+				rs += obj.getKey().getId();
+			}
+		}
+
 		return rs;
 	}
-
 
 }
