@@ -283,7 +283,7 @@ containing a value of this type.
     public static final class id {
         public static final int ImageView01_checklayout=0x7f05003f;
         public static final int ScrollView01=0x7f050029;
-        public static final int action_code=0x7f050045;
+        public static final int action_code=0x7f05004d;
         public static final int add_cart=0x7f050015;
         public static final int address_modify=0x7f050019;
         public static final int addresstext=0x7f050016;
@@ -311,7 +311,7 @@ containing a value of this type.
         public static final int encode_failed=0x7f050006;
         public static final int encode_succeeded=0x7f050007;
         public static final int fill=0x7f050001;
-        public static final int framelayout=0x7f050042;
+        public static final int framelayout=0x7f05004a;
         public static final int go_to_bug=0x7f050014;
         public static final int gridview_main=0x7f050024;
         public static final int imgView=0x7f05002a;
@@ -321,6 +321,7 @@ containing a value of this type.
         public static final int launch_product_query=0x7f050008;
         public static final int main=0x7f050023;
         public static final int main_radio=0x7f05002b;
+        public static final int more_store=0x7f050043;
         public static final int order_buy=0x7f050039;
         public static final int order_list=0x7f050036;
         public static final int order_menu_layout=0x7f050037;
@@ -334,6 +335,7 @@ containing a value of this type.
         public static final int preview_view=0x7f05003a;
         public static final int proImg=0x7f05000f;
         public static final int quit=0x7f050009;
+        public static final int radio_btn=0x7f050044;
         public static final int radio_button0=0x7f05002c;
         public static final int radio_button1=0x7f05002d;
         public static final int radio_button2=0x7f05002e;
@@ -343,16 +345,22 @@ containing a value of this type.
         public static final int search_book_contents_failed=0x7f05000c;
         public static final int search_book_contents_succeeded=0x7f05000d;
         public static final int selector=0x7f05001a;
+        public static final int store_address=0x7f050047;
+        public static final int store_list=0x7f050042;
+        public static final int store_name=0x7f050045;
+        public static final int store_payment=0x7f050048;
+        public static final int store_phone=0x7f050046;
+        public static final int store_select_layout=0x7f050041;
         public static final int stroke=0x7f050000;
         public static final int title_view=0x7f050040;
         public static final int txtResult=0x7f05003c;
         public static final int user_name=0x7f050013;
         public static final int usernametext=0x7f050017;
-        public static final int vf_header=0x7f050041;
+        public static final int vf_header=0x7f050049;
         public static final int view_content=0x7f05000e;
         public static final int viewfinder_view=0x7f05003b;
-        public static final int viewflow=0x7f050043;
-        public static final int viewflowindic=0x7f050044;
+        public static final int viewflow=0x7f05004b;
+        public static final int viewflowindic=0x7f05004c;
     }
     public static final class layout {
         public static final int activity_product_detail=0x7f030000;
@@ -366,7 +374,9 @@ containing a value of this type.
         public static final int order_list=0x7f030008;
         public static final int qrcode=0x7f030009;
         public static final int shelf_item=0x7f03000a;
-        public static final int viewflow=0x7f03000b;
+        public static final int store_select=0x7f03000b;
+        public static final int store_select_item=0x7f03000c;
+        public static final int viewflow=0x7f03000d;
     }
     public static final class menu {
         public static final int main=0x7f0a0000;

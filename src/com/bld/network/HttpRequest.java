@@ -53,6 +53,13 @@ public class HttpRequest {
 		Log.e("根据产品id返回产品列表", "" + url);
 		return request(url);
 	}
+	
+	public static String getAllStore() {
+
+		String url = URL + ConnectionUtils.getInstance().getAllStore();
+		Log.e("返回商铺", "" + url);
+		return request(url);
+	}
 
 	private static String request(String url) {
 		HttpClient httpClient = new DefaultHttpClient();

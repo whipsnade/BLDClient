@@ -14,6 +14,7 @@ import com.bld.adapter.CartListAdapter;
 import com.bld.adapter.OrderListAdapter;
 import com.bld.data.DataBuilder;
 import com.bld.object.Product;
+import com.bld.object.Store;
 import com.bld.utils.SharePreferencesOperator;
 import com.bld.utils.UserInfoCache;
 
@@ -41,6 +42,7 @@ import android.widget.TextView;
 
 public class CartActivity extends Activity {
 	public Map<Product, Boolean> ProductList = new HashMap<Product, Boolean>();
+
 	String selectIDS;
 
 	ListView list;
