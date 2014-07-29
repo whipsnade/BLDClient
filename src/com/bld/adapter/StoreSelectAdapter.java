@@ -83,7 +83,7 @@ public class StoreSelectAdapter extends BaseAdapter {
 
 	@Override
 	public View getView(final int position, View convertView, ViewGroup parent) {
-		Store store = (Store) ac.ShowStoreList.keySet().toArray()[position];
+		Store store = (Store) ac.StoreList.get(position);
 		boolean flag = ac.ShowStoreList.get(store);
 		Log.e("position",String.valueOf(position));
 		if (convertView == null) {
@@ -112,7 +112,7 @@ public class StoreSelectAdapter extends BaseAdapter {
 				.getName());
 		((TextView) convertView.findViewById(R.id.store_phone)).setText(store
 				.getTel());
-
+		Log.i("位置",""+position);
 		final RadioButton radio = (RadioButton) convertView
 				.findViewById(R.id.radio_btn);
 		radio.setChecked(flag);
@@ -122,7 +122,7 @@ public class StoreSelectAdapter extends BaseAdapter {
 			public void onClick(View v) {
 
 				// 重置，确保最多只有一项被选中
-				for (Store key : ac.ShowStoreList.keySet()) {
+				for (Store key : ac.StoreList) {
 					ac.ShowStoreList.put(key, false);
 
 				}

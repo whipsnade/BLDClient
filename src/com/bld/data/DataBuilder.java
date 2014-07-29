@@ -176,6 +176,7 @@ public class DataBuilder {
 				for(int i=0;i<jsonArray.length();i++){ 
                       JSONObject jsonObject2 = ((JSONObject)jsonArray.opt(i));
                       list.add(recoverStore(jsonObject2)); 
+                     
                  }
 			}catch(JSONException e) 
 			{  
@@ -208,6 +209,7 @@ public class DataBuilder {
 		store.setTel(jsonObject2.getString("tel"));
 		store.setLatitude(jsonObject2.getDouble("latitude"));
 		store.setLongitude(jsonObject2.getDouble("longitude"));
+
         return store;
 	}
 }
